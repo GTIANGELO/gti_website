@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
       routerConfig: router,
       title: 'GTI Software Developer Inc',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF640E)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2D66AD)),
         useMaterial3: true,
       ),
     );

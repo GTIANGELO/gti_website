@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gti_website/functions/reusable_variables.dart';
+import 'package:gti_website/functions/responsive_utils.dart';
 import 'package:gti_website/widgets/drawer.dart';
 import 'package:gti_website/widgets/navbar.dart';
 
@@ -12,28 +12,24 @@ class Contact extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: NavBar(scaffoldKey: _scaffoldKey),
+      appBar: NavBar(
+        scaffoldKey: _scaffoldKey,
+      ),
       drawer: const AppDrawer(),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          double width = constraints.maxWidth;
+          final screenSize = getScreenSize(constraints.maxWidth);
 
-          if (width >= Variables.kBreakpointLarge) {
+          if (screenSize.isLarge) {
             return _buildLargeLayout();
-          } else if (width >= Variables.kBreakpointMedium) {
+          } else if (screenSize.isMedium) {
             return _buildMediumLayout();
-          } else {
+          } else if (screenSize.isSmall) {
             return _buildSmallLayout();
           }
+          return const Center(child: Text('Unsupported screen size'));
         },
       ),
-      // bottomNavigationBar: const Padding(
-      //   padding: EdgeInsets.all(16.0),
-      //   child: Text(
-      //     '© 2025 GTI Software Developer Inc.',
-      //     textAlign: TextAlign.center,
-      //   ),
-      // ),
     );
   }
 

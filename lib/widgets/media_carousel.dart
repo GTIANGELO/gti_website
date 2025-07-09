@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:gti_website/functions/responsive_utils.dart';
+import 'package:gti_website/functions/utility_functions.dart';
 import 'package:gti_website/widgets/navbar.dart';
 import 'package:video_player/video_player.dart';
 
@@ -36,6 +37,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
         : VideoPlayerController.networkUrl(Uri.parse(widget.videoPath));
 
     _videoController
+      ..setVolume(0)
       ..initialize().then((_) {
         setState(() {});
       })
@@ -43,113 +45,68 @@ class _MediaCarouselState extends State<MediaCarousel> {
       ..play();
   }
 
-  Widget _buildOverlay(double width, double height) {
+  Widget _buildOverlay(double width, double height, ScreenSize screenSize) {
+    final double headerFontSize = screenSize.value(20, 30, 35, 50);
+    final double bodyFontSize = screenSize.value(10, 16, 16, 25);
+
     return Positioned(
       bottom: 0,
       left: 0,
       right: 0,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final screenSize = getScreenSize(constraints.maxWidth);
-
-          final double headerFontSize = screenSize.isSmall
-              ? 15
-              : screenSize.isMedium
-                  ? 28
-                  : 35;
-
-          final double bodyFontSize = screenSize.isSmall
-              ? 10
-              : screenSize.isMedium
-                  ? 16
-                  : 20;
-
-          return Container(
-            width: width,
-            height: screenSize.isSmall
-                ? height * 0.6
-                : screenSize.isMedium
-                    ? height * 0.5
-                    : height * 0.4,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.black.withOpacity(0.8),
-                ],
+      child: Container(
+        width: width,
+        height: height * screenSize.value(0.5, 0.45, 0.5, 0.4),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.transparent,
+              utilityFunctions
+                  .getThemeColors(context)["secondary"]!
+                  .withValues(alpha: 0.8),
+            ],
+          ),
+        ),
+        alignment: Alignment.topLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Software Outsourcing Company',
+              style: TextStyle(
+                color: utilityFunctions.getThemeColors(context)["primary"]!,
+                fontSize: headerFontSize,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            alignment: Alignment.topLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Software Outsourcing Company',
-                  style: TextStyle(
-                    color: utilityFunctions.getThemeColors(context)["primary"]!,
-                    fontSize: headerFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
+            const SizedBox(height: 15),
+            Expanded(
+              flex: 7,
+              child: Text(
+                'A leader in Software development focused on providing the best and most cost-effective solutions to small, medium and large businesses. Solutions that help businesses, organizations and individuals to save overhead cost, increase quality and efficiency.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: bodyFontSize,
+                  height: 1.4,
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // 🟦 Text block (70%)
-                    Expanded(
-                      flex: 7,
-                      child: Text(
-                        'A leader in Software development focused on providing the best and most cost-effective solutions to small, medium and large businesses. Solutions that help businesses, organizations and individuals to save overhead cost, increase quality and efficiency.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: bodyFontSize,
-                          height: 1.4,
-                        ),
-                      ),
-                    ),
-                    const Spacer(flex: 1),
-                    if (!screenSize.isSmall && !screenSize.isMedium)
-                      Expanded(
-                        flex: 3,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.arrow_back_ios,
-                                  color: Colors.white, size: 30),
-                              onPressed: () {
-                                _carouselController.previousPage();
-                              },
-                            ),
-                            const SizedBox(width: 12),
-                            IconButton(
-                              icon: const Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white, size: 30),
-                              onPressed: () {
-                                _carouselController.nextPage();
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                )
-              ],
+              ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    // final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double dynamicHeight = screenWidth * (9 / 22);
+    final screenSize = getScreenSize(screenWidth);
+
+    final double dynamicHeight =
+        screenWidth * screenSize.value(0.7, 0.8, 0.5, 0.5);
 
     final mediaItems = [
       if (_videoController.value.isInitialized)
@@ -157,6 +114,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
           children: [
             SizedBox(
               width: screenWidth,
+              height: dynamicHeight,
               child: FittedBox(
                 fit: BoxFit.cover,
                 clipBehavior: Clip.hardEdge,
@@ -174,18 +132,24 @@ class _MediaCarouselState extends State<MediaCarousel> {
           children: [
             SizedBox(
               width: screenWidth,
+              height: dynamicHeight,
               child:
                   widget.areImageAssets.length > i && widget.areImageAssets[i]
-                      ? Image.asset(widget.imageUrls[i],
-                          fit: BoxFit.cover, width: screenWidth)
+                      ? Image.asset(
+                          widget.imageUrls[i],
+                          fit: BoxFit.cover,
+                          width: screenWidth,
+                          height: dynamicHeight,
+                        )
                       : Image.network(
                           widget.imageUrls[i],
                           fit: BoxFit.cover,
                           width: screenWidth,
+                          height: dynamicHeight,
                           errorBuilder: (context, error, stackTrace) =>
                               const Icon(Icons.broken_image, size: 100),
                         ),
-            ),
+            )
           ],
         ),
     ];
@@ -194,7 +158,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
       children: [
         CarouselSlider(
           items: mediaItems,
-          carouselController: _carouselController,
+          carouselController: _carouselController, // ✅ Correct usage
           options: CarouselOptions(
             height: dynamicHeight,
             viewportFraction: 1.0,
@@ -214,7 +178,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
             },
           ),
         ),
-        _buildOverlay(screenWidth, dynamicHeight),
+        _buildOverlay(screenWidth, dynamicHeight, screenSize),
       ],
     );
   }

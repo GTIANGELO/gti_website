@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gti_website/functions/responsive_utils.dart';
 import 'package:gti_website/functions/reusable_variables.dart';
 import 'package:gti_website/functions/utility_functions.dart';
 
@@ -20,14 +20,18 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
       child: SizedBox(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            double width = constraints.maxWidth;
-            if (width >= Variables.kBreakpointLarge) {
+            // double width = constraints.maxWidth;
+            final screenSize = getScreenSize(constraints.maxWidth);
+            if (screenSize.isExtraLarge) {
+              return _buildExtraFullNav(context);
+            } else if (screenSize.isLarge) {
               return _buildFullNav(context);
-            } else if (width >= Variables.kBreakpointMedium) {
+            } else if (screenSize.isMedium) {
               return _buildMediumNav(context);
-            } else {
+            } else if (screenSize.isSmall) {
               return _buildSmallNav(context);
             }
+            return const Center(child: Text('Unsupported screen size'));
           },
         ),
       ),
@@ -64,12 +68,22 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buildFullNav(BuildContext context) {
+  Widget _buildExtraFullNav(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: utilityFunctions.getThemeColors(context)["tertiary"],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 3,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -88,7 +102,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             color: utilityFunctions.getThemeColors(context)["secondary"],
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 3,
                 offset: const Offset(0, 3),
               ),
@@ -101,6 +115,69 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                 .map(
                   (dropdown) => Expanded(
                     child: NavItemDropdown(
+                      fontSize: 18,
+                      label: dropdown['label'] as String,
+                      items: dropdown['items'] as List<Map<String, String>>,
+                      color:
+                          utilityFunctions.getThemeColors(context)["tertiary"]!,
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFullNav(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: utilityFunctions.getThemeColors(context)["tertiary"],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 3,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 80, vertical: 5),
+                child: _buildLogo(90),
+              ),
+              const Spacer(),
+              _buildNavItems(context, Variables.navItemsTop),
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: utilityFunctions.getThemeColors(context)["secondary"],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 3,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: Variables.navItemsDropdown
+                .map(
+                  (dropdown) => Expanded(
+                    child: NavItemDropdown(
+                      fontSize: 18,
                       label: dropdown['label'] as String,
                       items: dropdown['items'] as List<Map<String, String>>,
                       color:
@@ -119,27 +196,12 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 80, vertical: 5),
-                child: _buildLogo(80),
-              ),
-              const Spacer(),
-              _buildNavItems(context, Variables.navItemsTop),
-            ],
-          ),
-        ),
         Container(
           decoration: BoxDecoration(
-            color: utilityFunctions.getThemeColors(context)["secondary"],
+            color: utilityFunctions.getThemeColors(context)["tertiary"],
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 3,
                 offset: const Offset(0, 3),
               ),
@@ -147,36 +209,10 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: Variables.navItemsDropdown
-                .map(
-                  (dropdown) => Expanded(
-                    child: NavItemDropdown(
-                      label: dropdown['label'] as String,
-                      items: dropdown['items'] as List<Map<String, String>>,
-                      color:
-                          utilityFunctions.getThemeColors(context)["tertiary"]!,
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSmallNav(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                 child: _buildLogo(60),
               ),
               const Spacer(),
@@ -198,7 +234,61 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             color: utilityFunctions.getThemeColors(context)["secondary"],
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 3,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSmallNav(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: utilityFunctions.getThemeColors(context)["tertiary"],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 3,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                child: _buildLogo(60),
+              ),
+              const Spacer(),
+              IconButton(
+                icon: Icon(Icons.menu,
+                    color:
+                        utilityFunctions.getThemeColors(context)["secondary"]!),
+                iconSize: 20,
+                onPressed: () {
+                  scaffoldKey?.currentState
+                      ?.openDrawer(); // Open the drawer here
+                },
+              ),
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: utilityFunctions.getThemeColors(context)["secondary"],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 3,
                 offset: const Offset(0, 3),
               ),
@@ -273,12 +363,14 @@ class NavItemDropdown extends StatefulWidget {
   final String label;
   final List<Map<String, String>> items;
   final Color color;
+  final double fontSize;
 
   const NavItemDropdown({
     super.key,
     required this.label,
     required this.items,
     required this.color,
+    required this.fontSize,
   });
 
   // 🔹 Static reference to the active dropdown
@@ -411,7 +503,9 @@ class _NavItemDropdownState extends State<NavItemDropdown>
                                     context.go(item['route']!);
                                     _setHover(false);
                                   },
-                                  hoverColor: Colors.orange.shade50,
+                                  hoverColor: utilityFunctions
+                                      .getThemeColors(context)["secondary"]!
+                                      .withValues(alpha: 0.1),
                                   child: Container(
                                     width: size.width,
                                     padding: const EdgeInsets.symmetric(
@@ -421,7 +515,7 @@ class _NavItemDropdownState extends State<NavItemDropdown>
                                     child: Text(
                                       item['label']!,
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: widget.fontSize,
                                         color: utilityFunctions.getThemeColors(
                                             context)["secondary"]!,
                                       ),
