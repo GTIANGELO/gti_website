@@ -198,23 +198,36 @@ class _BusinessBoostingFeatureState extends State<BusinessBoostingFeature> {
                         ),
                       ),
                       Positioned.fill(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Visibility(
-                                visible: _currentPage > 0,
-                                child: _buildNavButton(
-                                    Icons.chevron_left, _prevPage),
+                        child: AnimatedSlide(
+                          offset:
+                              _cardVisible ? Offset.zero : const Offset(0, 0.1),
+                          duration: const Duration(milliseconds: 600),
+                          curve: Curves.easeOut,
+                          child: AnimatedOpacity(
+                            opacity: _cardVisible ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 600),
+                            curve: Curves.easeOut,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Visibility(
+                                    visible: _currentPage > 0,
+                                    child: _buildNavButton(
+                                        Icons.chevron_left, _prevPage),
+                                  ),
+                                  Visibility(
+                                    visible: _currentPage <
+                                        Variables().items.length - 1,
+                                    child: _buildNavButton(
+                                        Icons.chevron_right, _nextPage),
+                                  ),
+                                ],
                               ),
-                              Visibility(
-                                visible:
-                                    _currentPage < Variables().items.length - 1,
-                                child: _buildNavButton(
-                                    Icons.chevron_right, _nextPage),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
