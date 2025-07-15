@@ -293,4 +293,32 @@ class Variables {
       "position": "MIS Manager - STI West Negros University",
     },
   ];
+
+  static const faqQuestions = [
+    {
+      'question': 'Lorem ipsum dolor sit amet?',
+      'answer':
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel nulla at sapien fringilla fermentum.',
+    },
+    {
+      'question': 'Curabitur non nulla sit amet nisl tempus?',
+      'answer':
+          'Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Nulla quis lorem ut libero malesuada feugiat.',
+    },
+    {
+      'question': 'Quisque velit nisi pretium ut lacinia?',
+      'answer':
+          'Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec rutrum congue leo eget malesuada.',
+    },
+    {
+      'question': 'Vivamus suscipit tortor eget felis porttitor?',
+      'answer':
+          'Vivamus suscipit tortor eget felis porttitor volutpat. Praesent sapien massa, convallis a pellentesque nec.',
+    },
+    {
+      'question': 'Donec sollicitudin molestie malesuada?',
+      'answer':
+          'Donec sollicitudin molestie malesuada. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.',
+    },
+  ];
 }
