@@ -12,6 +12,8 @@ class UtilityFunctions {
       'danger': const Color(0xFFD9534F),
     };
   }
+
+  getPrimaryColor(BuildContext context) {}
 }
 
 extension ScreenSizeHelper on ScreenSize {
