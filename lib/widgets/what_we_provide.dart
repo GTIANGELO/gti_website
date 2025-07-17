@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gti_website/functions/responsive_utils.dart';
 import 'package:gti_website/functions/utility_functions.dart';
+import 'package:gti_website/widgets/navbar.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class WhateWeProvide extends StatefulWidget {
@@ -45,46 +46,89 @@ class _WhateWeProvideState extends State<WhateWeProvide>
           horizontal: screenWidth * screenSize.value(0, 0.06, 0.06, 0.12),
           vertical: 100,
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SlideFadeWidget(
-                controller: _leftCtrl,
-                offset: const Offset(-0.5, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "This is what we provide to our clients @ 24/7",
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent),
+        child: screenSize.isMedium
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SlideFadeWidget(
+                    controller: _leftCtrl,
+                    offset: const Offset(-0.5, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "This is what we provide to our clients @ 24/7",
+                          style: TextStyle(
+                              fontSize: screenSize.value(30.0, 30.0, 30, 40),
+                              fontWeight: FontWeight.bold,
+                              color: utilityFunctions
+                                  .getThemeColors(context)["secondary"]!),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "We provide solutions that match your budget and schedule. With GTI, your IT is in good hands @ 24/7. Let GTI professionals handle your IT needs so you can focus on growth.",
+                          style: TextStyle(
+                              fontSize: screenSize.value(30.0, 15.0, 15, 18),
+                              color: Colors.grey[700]),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "We provide solutions that match your budget and schedule. With GTI, your IT is in good hands @ 24/7. Let GTI professionals handle your IT needs so you can focus on growth.",
-                      style: TextStyle(fontSize: 18, color: Colors.grey[700]),
+                  ),
+                  const SizedBox(height: 30),
+                  SlideFadeWidget(
+                    controller: _rightCtrl,
+                    offset: const Offset(0.5, 0),
+                    rotate: true,
+                    child: const Image(
+                      image: AssetImage('assets/clientchart.png'),
+                      fit: BoxFit.contain,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: SlideFadeWidget(
+                      controller: _leftCtrl,
+                      offset: const Offset(-0.5, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "This is what we provide to our clients @ 24/7",
+                            style: TextStyle(
+                                fontSize: screenSize.value(30.0, 30.0, 30, 40),
+                                fontWeight: FontWeight.bold,
+                                color: utilityFunctions
+                                    .getThemeColors(context)["secondary"]!),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            "We provide solutions that match your budget and schedule. With GTI, your IT is in good hands @ 24/7. Let GTI professionals handle your IT needs so you can focus on growth.",
+                            style: TextStyle(
+                                fontSize: screenSize.value(30.0, 30.0, 15, 18),
+                                color: Colors.grey[700]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: SlideFadeWidget(
+                      controller: _rightCtrl,
+                      offset: const Offset(0.5, 0),
+                      rotate: true,
+                      child: const Image(
+                        image: AssetImage('assets/clientchart.png'),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: SlideFadeWidget(
-                controller: _rightCtrl,
-                offset: const Offset(0.5, 0),
-                rotate: true,
-                child: const Image(
-                  image: AssetImage('assets/clientchart.png'),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

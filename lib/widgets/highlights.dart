@@ -86,7 +86,7 @@ class _HighlightsState extends State<Highlights> with TickerProviderStateMixin {
     }
   }
 
-  Widget _buildItem(String imagePath, String text) {
+  Widget _buildItem(String imagePath, String text, ScreenSize screenSize) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -102,7 +102,7 @@ class _HighlightsState extends State<Highlights> with TickerProviderStateMixin {
             child: Text(
               text,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: screenSize.value(30.0, 15.0, 15, 18),
                 color: Colors.grey[700],
               ),
             ),
@@ -112,11 +112,11 @@ class _HighlightsState extends State<Highlights> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildColumn(List<Map<String, String>> items) {
+  Widget _buildColumn(List<Map<String, String>> items, ScreenSize screenSize) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: items
-          .map((item) => _buildItem(item['image']!, item['text']!))
+          .map((item) => _buildItem(item['image']!, item['text']!, screenSize))
           .toList(),
     );
   }
@@ -151,29 +151,47 @@ class _HighlightsState extends State<Highlights> with TickerProviderStateMixin {
                     style: TextStyle(
                       color:
                           utilityFunctions.getThemeColors(context)["secondary"],
-                      fontSize: screenSize.value(30.0, 30.0, 40.0, 50.0),
+                      fontSize: screenSize.value(30.0, 40.0, 40.0, 50.0),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: SlideTransition(
-                          position: _leftSlide,
-                          child: _buildColumn(Variables().leftColumnItems),
+                  screenSize.isMedium
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SlideTransition(
+                              position: _leftSlide,
+                              child: _buildColumn(
+                                  Variables().leftColumnItems, screenSize),
+                            ),
+                            SlideTransition(
+                              position: _rightSlide,
+                              child: _buildColumn(
+                                  Variables().rightColumnItems, screenSize),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: SlideTransition(
+                                position: _leftSlide,
+                                child: _buildColumn(
+                                    Variables().leftColumnItems, screenSize),
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: SlideTransition(
+                                position: _rightSlide,
+                                child: _buildColumn(
+                                    Variables().rightColumnItems, screenSize),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        child: SlideTransition(
-                          position: _rightSlide,
-                          child: _buildColumn(Variables().rightColumnItems),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),

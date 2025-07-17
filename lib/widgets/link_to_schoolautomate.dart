@@ -73,7 +73,7 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal:
-                        screenWidth * screenSize.value(0, 0.06, 0.06, 0.09),
+                        screenWidth * screenSize.value(0, 0.03, 0.06, 0.09),
                     vertical: 50,
                   ),
                   child: Column(
@@ -85,7 +85,7 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
                           "Check our very successful, platform independent product SchoolAutomate (made on Java/JSP/AJAX) used by many small & big Universities, Colleges, Highschools and Elementary schools.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: screenSize.value(30.0, 18.0, 20, 30),
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
                           ),
@@ -127,7 +127,8 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
                                         child: Text(
                                           item['text']!,
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: screenSize.value(
+                                                30.0, 15.0, 15, 18),
                                             color: Colors.grey[700],
                                           ),
                                         ),

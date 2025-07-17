@@ -59,7 +59,7 @@ class _WeAtGTIState extends State<WeAtGTI> with SingleTickerProviderStateMixin {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     final screenSize = getScreenSize(screenWidth);
-    final double paragraphSize = screenSize.value(15.0, 15.0, 18.0, 18.0);
+    final double paragraphSize = screenSize.value(15.0, 15.0, 16.0, 18.0);
 
     final Color highlightColor =
         utilityFunctions.getThemeColors(context)["primary"]!;
@@ -73,14 +73,16 @@ class _WeAtGTIState extends State<WeAtGTI> with SingleTickerProviderStateMixin {
           position: _slideAnimation,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.1, vertical: 100),
+                horizontal:
+                    screenWidth * screenSize.value(15.0, 0.08, 0.08, 0.1),
+                vertical: 100),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RichText(
                   text: TextSpan(
                     style: TextStyle(
-                      fontSize: screenSize.value(30.0, 40.0, 55.0, 60),
+                      fontSize: screenSize.value(30.0, 40.0, 50.0, 60),
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),

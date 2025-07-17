@@ -54,7 +54,8 @@ class _BusinessBoostingFeatureState extends State<BusinessBoostingFeature> {
               .withValues(alpha: 0.1),
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * screenSize.value(30.0, 30.0, 0.1, 0.14),
+              horizontal:
+                  screenWidth * screenSize.value(30.0, 0.01, 0.05, 0.14),
               vertical: 90,
             ),
             child: Column(
@@ -83,7 +84,7 @@ class _BusinessBoostingFeatureState extends State<BusinessBoostingFeature> {
                 ),
                 const SizedBox(height: 35),
                 SizedBox(
-                  height: 400,
+                  height: screenSize.value(30.0, 300, 400, 400),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -150,7 +151,8 @@ class _BusinessBoostingFeatureState extends State<BusinessBoostingFeature> {
                                               item['header'],
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 30,
+                                                fontSize: screenSize.value(
+                                                    10, 16, 25, 40),
                                                 color: utilityFunctions
                                                     .getThemeColors(
                                                         context)["secondary"]!,
@@ -178,7 +180,9 @@ class _BusinessBoostingFeatureState extends State<BusinessBoostingFeature> {
                                                     child: Text(
                                                       feature['text'],
                                                       style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize:
+                                                            screenSize.value(
+                                                                10, 16, 16, 20),
                                                         color: Colors.grey[700],
                                                       ),
                                                     ),

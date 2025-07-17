@@ -117,7 +117,7 @@ class _GtiSoftwareBringsState extends State<GtiSoftwareBrings>
       },
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * screenSize.value(30.0, 30.0, 0.1, 0.05),
+            horizontal: screenWidth * screenSize.value(30.0, 0.05, 0.05, 0.05),
             vertical: 100),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

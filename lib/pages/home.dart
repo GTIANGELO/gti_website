@@ -188,10 +188,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget _buildLargeLayout() {
     return Stack(
       children: [
-        // Background scrollable content
         SingleChildScrollView(
           controller: _scrollController,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
               const MediaCarousel(
@@ -208,13 +208,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ListOfServices(
                 services: Variables.serviceItems,
                 crossAxisCount: 3,
-                headerText: 'List of Services',
+                headerText: 'Our Services',
               ),
               GtiSoftwareBrings(
                 services: Variables.bringItems,
                 crossAxisCount: 3,
               ),
-              // const BusinessBoostingFeature(),
+              const BusinessBoostingFeature(),
+              const SchoolAutomateSection(),
+              const Highlights(),
+              const WhateWeProvide(),
+              const LinkToSchoolAutomate(),
+              const ValuedClients(crossAxisCount: 5),
+              const Ratings(),
+              const QuickContact(),
+              Footer(scrollController: _scrollController)
             ],
           ),
         ),
@@ -239,12 +247,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget _buildMediumLayout() {
     return Stack(
       children: [
-        // Background scrollable content
         SingleChildScrollView(
           controller: _scrollController,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // const SizedBox(height: 100),
+              const SizedBox(height: 50),
               const MediaCarousel(
                 videoPath: 'assets/carousel_media/vid1.mp4',
                 isVideoAsset: true,
@@ -256,17 +264,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 areImageAssets: [true, true, true],
               ),
               const WeAtGTI(),
-
               ListOfServices(
                 services: Variables.serviceItems,
                 crossAxisCount: 2,
-                headerText: 'List of Services',
+                headerText: 'Our Services',
               ),
               GtiSoftwareBrings(
                 services: Variables.bringItems,
-                crossAxisCount: 3,
+                crossAxisCount: 2,
               ),
-              // const BusinessBoostingFeature(),
+              const BusinessBoostingFeature(),
+              const SchoolAutomateSection(),
+              const Highlights(),
+              const WhateWeProvide(),
+              const LinkToSchoolAutomate(),
+              const ValuedClients(crossAxisCount: 3),
+              const Ratings(),
+              const QuickContact(),
+              Footer(scrollController: _scrollController)
             ],
           ),
         ),
