@@ -24,9 +24,9 @@ flutter:
     - assets/gti_logo.png
     - assets/gti_logo_2.png
     - assets/sabg.png
+    - assets/schoolautomate.png
     - assets/verify.png
     - assets/clientchart.png
-    - assets/sass.png
     - assets/contact.jpg
 
     - assets/carousel_media/vid1.mp4

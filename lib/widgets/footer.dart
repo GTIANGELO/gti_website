@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gti_website/functions/responsive_utils.dart';
 import 'package:gti_website/functions/utility_functions.dart';
 import 'package:gti_website/widgets/navbar.dart';
@@ -78,7 +79,9 @@ class Footer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(onPressed: () {}, child: const Text('Privacy Policy')),
-              TextButton(onPressed: () {}, child: const Text('Sitemap')),
+              TextButton(
+                  onPressed: () => context.go("/sitemap"),
+                  child: const Text('Sitemap')),
               TextButton(onPressed: () {}, child: const Text('Contact')),
               TextButton(onPressed: () {}, child: const Text("FAQ's")),
               const SizedBox(width: 20),
