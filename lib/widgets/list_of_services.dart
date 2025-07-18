@@ -38,7 +38,7 @@ class ListOfServices extends StatelessWidget {
         children: [
           // Animated Header
           Padding(
-            padding: const EdgeInsets.only(bottom: 50.0),
+            padding: const EdgeInsets.only(bottom: 45.0),
             child: Align(
               alignment: Alignment.center,
               child: _FadeSlideOnVisible(
@@ -59,10 +59,10 @@ class ListOfServices extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: crossAxisCount,
-            crossAxisSpacing: screenSize.value(10.0, 10.0, 20.0, 35.0),
-            mainAxisSpacing: screenSize.value(15.0, 10.0, 20.0, 35.0),
+            crossAxisSpacing: screenSize.value(10.0, 15.0, 20.0, 35.0),
+            mainAxisSpacing: screenSize.value(15.0, 15.0, 20.0, 35.0),
             padding: const EdgeInsets.symmetric(horizontal: 5),
-            childAspectRatio: screenSize.value(50.0, 3.5, 2.5, 3),
+            childAspectRatio: screenSize.value(50.0, 2, 2.5, 3),
             children: List.generate(services.length, (index) {
               final service = services[index];
               final delay = Duration(milliseconds: (index ~/ 3) * 200);

@@ -77,7 +77,7 @@ class _QuickContactState extends State<QuickContact>
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal:
-                      screenWidth * screenSize.value(0, 0.06, 0.06, 0.19),
+                      screenWidth * screenSize.value(0, 0.03, 0.06, 0.19),
                   vertical: 80,
                 ),
                 child: Card(

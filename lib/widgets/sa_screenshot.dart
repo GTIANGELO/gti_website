@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gti_website/functions/responsive_utils.dart';
+import 'package:gti_website/functions/utility_functions.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class SchoolAutomateSection extends StatefulWidget {
@@ -16,6 +18,7 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+    final screenSize = getScreenSize(screenWidth);
 
     return VisibilityDetector(
       key: const Key('school-automate-section'),
@@ -27,10 +30,10 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 180),
+        padding: const EdgeInsets.symmetric(vertical: 150),
         child: SizedBox(
           width: screenWidth,
-          height: screenHeight * 0.99,
+          height: screenHeight * screenSize.value(30.0, 0.75, 1.2, 1.2),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -72,7 +75,7 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
                           Text(
                             "Built for Ease, Built for you",
                             style: TextStyle(
-                              fontSize: 60,
+                              fontSize: screenSize.value(10, 25, 40, 60),
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -81,7 +84,7 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
                             textAlign: TextAlign.center,
                             "Built for Simplicity",
                             style: TextStyle(
-                              fontSize: 60,
+                              fontSize: screenSize.value(10, 25, 40, 60),
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.primary,
                             ),
