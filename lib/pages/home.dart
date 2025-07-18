@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gti_website/functions/navbar_controller.dart';
 import 'package:gti_website/functions/responsive_utils.dart';
 import 'package:gti_website/functions/reusable_variables.dart';
 import 'package:gti_website/widgets/business_boosting_feature.dart';
@@ -27,13 +28,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _scrollController = ScrollController();
   final GlobalKey<ChatBoxPanelState> chatBoxKey =
       GlobalKey<ChatBoxPanelState>();
+  final ValueNotifier<bool> isChatOpen = ValueNotifier(false);
+
+  final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
-  double _lastScrollOffset = 0;
-  final ValueNotifier<bool> isChatOpen = ValueNotifier(false);
+  final NavBarController _navBarController = NavBarController(initiallyHidden: false);
 
   @override
   void initState() {
@@ -44,46 +46,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       duration: const Duration(milliseconds: 500),
     );
 
-    // Animate from hidden (above) to shown (in place)
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -1), // hidden
-      end: Offset.zero, // shown
+      begin: const Offset(0, -1),
+      end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut,
     ));
 
-    _scrollController.addListener(_onScroll);
+    _scrollController.addListener(() {
+      _navBarController.handleScroll(
+        scrollController: _scrollController,
+        animationController: _animationController,
+      );
+    });
 
-    // Initially set navbar to hidden, then animate to shown
     WidgetsBinding.instance.addPostFrameCallback((_) {
       precacheImage(const AssetImage('assets/gti_logo_2.png'), context);
       precacheImage(const AssetImage('assets/carousel_media/1.jpg'), context);
       precacheImage(const AssetImage('assets/carousel_media/2.jpg'), context);
       precacheImage(const AssetImage('assets/carousel_media/3.jpg'), context);
 
-      _animationController.forward(); // Slide down to show
-      _isNavBarHidden = false;
+      _animationController.forward();
     });
-  }
-
-  bool _isNavBarHidden = true;
-
-  void _onScroll() {
-    final offset = _scrollController.offset;
-    final delta = offset - _lastScrollOffset;
-
-    if (delta > 0 && !_isNavBarHidden) {
-      // Scrolling down — hide navbar
-      _animationController.reverse(); // slide up
-      _isNavBarHidden = true;
-    } else if (delta < 0 && _isNavBarHidden) {
-      // Scrolling up — show navbar
-      _animationController.forward(); // slide down
-      _isNavBarHidden = false;
-    }
-
-    _lastScrollOffset = offset;
   }
 
   @override

@@ -145,7 +145,7 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.asset(
-                              'assets/sabg.png',
+                              'assets/schoolautomate.png',
                               fit: BoxFit.cover,
                             ),
                           ),

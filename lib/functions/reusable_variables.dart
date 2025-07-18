@@ -321,4 +321,63 @@ class Variables {
           'Donec sollicitudin molestie malesuada. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.',
     },
   ];
+
+  static const sitemapItems = [
+    {
+      'header': 'Company',
+      'links': [
+        {'label': 'Overview', 'path': '/company/overview'},
+        {'label': 'Partner', 'path': '/company/partner'},
+        {'label': 'Philosophy', 'path': '/company/philosophy'},
+        {'label': 'Milestone', 'path': '/company/milestone'},
+        {'label': 'Careers & Opportunity', 'path': '/company/careers'},
+      ],
+    },
+    {
+      'header': 'Outsourcing',
+      'links': [
+        {'label': 'Why GTI?', 'path': '/outsourcing/why-gti'},
+        {'label': 'Outsourcing Model', 'path': '/outsourcing/model'},
+        {'label': 'Benefits and Opportunity', 'path': '/outsourcing/benefits'},
+      ],
+    },
+    {
+      'header': 'Services',
+      'links': [
+        {'label': 'Overview', 'path': '/services/overview'},
+        {'label': 'Co-Development', 'path': '/services/co-development'},
+        {'label': 'Custom Development', 'path': '/services/custom'},
+        {'label': 'Maintenance', 'path': '/services/maintenance'},
+        {'label': 'Porting', 'path': '/services/porting'},
+      ],
+    },
+    {
+      'header': 'Sectors',
+      'links': [
+        {'label': 'Overview', 'path': '/sectors/overview'},
+        {'label': 'Educational', 'path': '/sectors/educational'},
+        {'label': 'Healthcare', 'path': '/sectors/healthcare'},
+        {'label': 'Web Services', 'path': '/sectors/web-services'},
+        {'label': 'Interactive/Creative', 'path': '/sectors/interactive'},
+      ],
+    },
+    {
+      'header': 'Skills',
+      'links': [
+        {'label': 'Overview', 'path': '/skills/overview'},
+        {'label': 'Windows', 'path': '/skills/windows'},
+        {'label': 'Web Technology', 'path': '/skills/web-tech'},
+        {'label': 'Database', 'path': '/skills/database'},
+        {'label': 'Hand-held', 'path': '/skills/handheld'},
+        {'label': 'E-learning', 'path': '/skills/e-learning'},
+      ],
+    },
+    {
+      'links': [
+        {'label': 'Home', 'path': '/'},
+        {'label': 'Customer', 'path': '/customer'},
+        {'label': 'Contacts', 'path': '/contacts'},
+      ],
+    },
+  ];
 }

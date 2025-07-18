@@ -23,7 +23,7 @@ class MyAppRouter {
           name: AppRoutePaths.sitemap,
           path: AppRoutePaths.sitemap,
           // builder: (context, state) => const Sitemap(),
-          pageBuilder: (context, state) => NoTransitionPage(
+          pageBuilder: (context, state) => const NoTransitionPage(
             child: Sitemap(),
           ),
         ),
