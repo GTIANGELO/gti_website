@@ -98,7 +98,7 @@ class _RatingsState extends State<Ratings> with SingleTickerProviderStateMixin {
                       .withValues(alpha: 0.1),
                   padding: EdgeInsets.symmetric(
                     horizontal:
-                        screenWidth * screenSize.value(0, 0.06, 0.06, 0.1),
+                        screenWidth * screenSize.value(0, 0.02, 0.03, 0.1),
                     vertical: 50,
                   ),
                   child: Column(

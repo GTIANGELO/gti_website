@@ -46,8 +46,8 @@ class _MediaCarouselState extends State<MediaCarousel> {
   }
 
   Widget _buildOverlay(double width, double height, ScreenSize screenSize) {
-    final double headerFontSize = screenSize.value(20, 30, 35, 50);
-    final double bodyFontSize = screenSize.value(10, 16, 16, 25);
+    final double headerFontSize = screenSize.value(20, 30, 40, 50);
+    final double bodyFontSize = screenSize.value(10, 16, 18, 25);
 
     return Positioned(
       bottom: 0,
@@ -55,7 +55,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
       right: 0,
       child: Container(
         width: width,
-        height: height * screenSize.value(0.5, 0.45, 0.5, 0.4),
+        height: height * screenSize.value(0.5, 0.45, 0.4, 0.4),
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -106,7 +106,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
     final screenSize = getScreenSize(screenWidth);
 
     final double dynamicHeight =
-        screenWidth * screenSize.value(0.7, 0.8, 0.5, 0.5);
+        screenWidth * screenSize.value(0.7, 0.8, 0.7, 0.5);
 
     final mediaItems = [
       if (_videoController.value.isInitialized)

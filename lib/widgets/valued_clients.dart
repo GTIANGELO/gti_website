@@ -67,7 +67,7 @@ class _ValuedClientsState extends State<ValuedClients>
       },
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * screenSize.value(30.0, 30.0, 0.1, 0.13),
+          horizontal: screenWidth * screenSize.value(30.0, 0.1, 0.1, 0.13),
           vertical: 100,
         ),
         child: Column(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gti_website/functions/responsive_utils.dart';
+import 'package:gti_website/functions/utility_functions.dart';
 import 'package:gti_website/widgets/navbar.dart';
 import 'package:gti_website/widgets/outlined_button.dart';
 
@@ -11,46 +13,51 @@ class Footer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, size: 20),
           const SizedBox(width: 8),
-          Text(text),
+          Expanded(
+            child: Text(
+              text,
+              softWrap: true,
+              overflow: TextOverflow.visible,
+              style: const TextStyle(height: 1.4),
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildLeftColumn(Color color) {
-    return Expanded(
-      flex: 1,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'US Office',
-            style: TextStyle(
-                fontSize: 35, fontWeight: FontWeight.bold, color: color),
-          ),
-          const SizedBox(height: 10),
-          _buildIconTextItem(Icons.location_on,
-              '#5450 Montery Road, #29, San Jose, CA – 95111'),
-          _buildIconTextItem(Icons.phone_android_sharp, '+1 408 375 5622'),
-          _buildIconTextItem(Icons.phone_android, '+1 408 629 0389'),
-          _buildIconTextItem(Icons.email, 'alee@gtiinfotech.com'),
-          const SizedBox(height: 30),
-          Text(
-            'GTI Development',
-            style: TextStyle(
-                fontSize: 35, fontWeight: FontWeight.bold, color: color),
-          ),
-          const SizedBox(height: 10),
-          _buildIconTextItem(Icons.location_on,
-              "Unit 11 - 2/F Romulo's Bldg, Zone 6, San Isidro, Talisay City, Cebu - 6045 Philippines"),
-          _buildIconTextItem(Icons.phone_android_sharp, '+63 920 917 5823'),
-          _buildIconTextItem(Icons.phone_android, '+63 32 273-7540'),
-          _buildIconTextItem(Icons.email, 'sales@gtiinfotech.com'),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'US Office',
+          style: TextStyle(
+              fontSize: 35, fontWeight: FontWeight.bold, color: color),
+        ),
+        const SizedBox(height: 10),
+        _buildIconTextItem(
+            Icons.location_on, '#5450 Montery Road, #29, San Jose, CA – 95111'),
+        _buildIconTextItem(Icons.phone_android_sharp, '+1 408 375 5622'),
+        _buildIconTextItem(Icons.phone_android, '+1 408 629 0389'),
+        _buildIconTextItem(Icons.email, 'alee@gtiinfotech.com'),
+        const SizedBox(height: 30),
+        Text(
+          'GTI Development',
+          style: TextStyle(
+              fontSize: 35, fontWeight: FontWeight.bold, color: color),
+        ),
+        const SizedBox(height: 10),
+        _buildIconTextItem(Icons.location_on,
+            "Unit 11 - 2/F Romulo's Bldg, Zone 6, San Isidro, Talisay City, Cebu - 6045 Philippines"),
+        _buildIconTextItem(Icons.phone_android_sharp, '+63 920 917 5823'),
+        _buildIconTextItem(Icons.phone_android, '+63 32 273-7540'),
+        _buildIconTextItem(Icons.email, 'sales@gtiinfotech.com'),
+      ],
     );
   }
 
@@ -100,6 +107,8 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final screenSize = getScreenSize(screenWidth);
     Color color = utilityFunctions.getThemeColors(context)["primary"]!;
     return Padding(
       padding: const EdgeInsets.only(top: 80),
@@ -120,15 +129,27 @@ class Footer extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 30.0, horizontal: 200),
-                  child: Row(
-                    children: [
-                      _buildLeftColumn(color),
-                      const SizedBox(width: 30),
-                      _buildRightColumn(context),
-                    ],
+                  padding: EdgeInsets.symmetric(
+                    vertical: 30.0,
+                    horizontal: screenSize.value(30.0, 30.0, 50, 200),
                   ),
+                  child: (screenSize.isSmall || screenSize.isMedium)
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildLeftColumn(color),
+                            const SizedBox(height: 30),
+                            _buildRightColumn(context),
+                          ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: _buildLeftColumn(color)),
+                            const SizedBox(width: 30),
+                            _buildRightColumn(context),
+                          ],
+                        ),
                 ),
               ),
               Container(
