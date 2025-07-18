@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gti_website/functions/responsive_utils.dart';
 import 'package:gti_website/functions/reusable_variables.dart';
 import 'package:gti_website/widgets/business_boosting_feature.dart';
+import 'package:gti_website/widgets/chatbox.dart';
 import 'package:gti_website/widgets/drawer.dart';
 import 'package:gti_website/widgets/footer.dart';
 import 'package:gti_website/widgets/gti_software_brings.dart';
@@ -27,10 +28,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
-
+  final GlobalKey<ChatBoxPanelState> chatBoxKey =
+      GlobalKey<ChatBoxPanelState>();
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
   double _lastScrollOffset = 0;
+  final ValueNotifier<bool> isChatOpen = ValueNotifier(false);
 
   @override
   void initState() {
@@ -111,17 +114,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           return const Center(child: Text('Unsupported screen size'));
         },
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 20.0, bottom: 20.0), // Add space
-        child: FloatingActionButton(
-          onPressed: () {},
-          tooltip: "FAQ's",
-          child: Icon(
-            Icons.message_outlined,
-            size: 20,
-            color: utilityFunctions.getThemeColors(context)["secondary"],
-          ),
-        ),
+      floatingActionButton: ValueListenableBuilder<bool>(
+        valueListenable: isChatOpen,
+        builder: (context, isOpen, child) {
+          return Visibility(
+            visible: !isOpen,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0, bottom: 20.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  chatBoxKey.currentState?.toggle();
+                },
+                tooltip: "FAQ's",
+                child: Icon(
+                  Icons.message_outlined,
+                  size: 20,
+                  color: utilityFunctions.getThemeColors(context)["secondary"],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -163,7 +176,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               const ValuedClients(crossAxisCount: 6),
               const Ratings(),
               const QuickContact(),
-              Footer(scrollController: _scrollController)
+              Footer(scrollController: _scrollController),
             ],
           ),
         ),
@@ -180,6 +193,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               child: NavBar(scaffoldKey: _scaffoldKey),
             ),
           ),
+        ),
+
+        ChatBoxPanel(
+          key: chatBoxKey,
+          isOpenNotifier: isChatOpen,
         ),
       ],
     );
