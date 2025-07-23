@@ -69,36 +69,82 @@ class Variables {
 
   static final List<ServiceItem> serviceItems = [
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon1.png',
-        title: 'Educational Software'),
+      iconPath: 'assets/list_of_services/icon1.png',
+      title: 'Educational Software',
+      contentHeader: 'Educational Software',
+      contentText:
+          'We create engaging and interactive educational software that enhances learning experiences and improves outcomes for students and educators alike.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon2.png',
-        title: 'Healthcare Software'),
+      iconPath: 'assets/list_of_services/icon2.png',
+      title: 'Healthcare Software',
+      contentHeader: 'Healthcare Software',
+      contentText:
+          'We develop smart healthcare software that streamlines medical processes, improves patient care, and simplifies data management for healthcare providers.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon3.png',
-        title: 'Web Service Design and Development'),
+      iconPath: 'assets/list_of_services/icon3.png',
+      title: 'Web Service Design and Development',
+      contentHeader: 'Web Service Design and Development',
+      contentText:
+          'We craft powerful and scalable web services that enable seamless online interactions, data exchange, and integration across platforms and devices.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon4.png',
-        title: 'Database Design and Optimization'),
+      iconPath: 'assets/list_of_services/icon4.png',
+      title: 'Database Design and Optimization',
+      contentHeader: 'Database Design and Optimization',
+      contentText:
+          'We build efficient, scalable databases and optimize them to deliver fast performance, reliable access, and seamless data management for your business.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon5.png',
-        title: 'Application Development and Maintenance'),
+      iconPath: 'assets/list_of_services/icon5.png',
+      title: 'Application Development and Maintenance',
+      contentHeader: 'Application Development and Maintenance',
+      contentText:
+          'We develop tailored applications that meet your business goals and provide ongoing maintenance to keep them running smoothly, securely, and efficiently.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon6.png', title: 'Co-development'),
+      iconPath: 'assets/list_of_services/icon6.png',
+      title: 'Co-development',
+      contentHeader: 'Co-development',
+      contentText:
+          'We collaborate closely with your team through co-development to accelerate project delivery, share expertise, and build high-quality software together.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon7.png',
-        title: 'Custom Development'),
+      iconPath: 'assets/list_of_services/icon7.png',
+      title: 'Custom Development',
+      contentHeader: 'Custom Development',
+      contentText:
+          'We deliver custom software solutions built specifically around your unique business needs, ensuring flexibility, scalability, and a perfect fit for your goals.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon8.png',
-        title: 'Architecture Consulting'),
+      iconPath: 'assets/list_of_services/icon8.png',
+      title: 'Architecture Consulting',
+      contentHeader: 'Architecture Consulting',
+      contentText:
+          'We provide expert architecture consulting to design scalable, secure, and efficient system structures that support your long-term technology strategy.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon9.png', title: 'E-Business'),
+      iconPath: 'assets/list_of_services/icon9.png',
+      title: 'E-Business',
+      contentHeader: 'E-Business',
+      contentText:
+          'We create innovative e-business solutions that help you streamline operations, engage customers online, and grow your digital presence effectively.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon10.png',
-        title: 'Hand Held Development, Games and Applications'),
+      iconPath: 'assets/list_of_services/icon10.png',
+      title: 'Hand Held Development, Games and Applications',
+      contentHeader: 'Hand Held Development, Games and Applications',
+      contentText:
+          'We design and develop engaging handheld games and applications that deliver seamless performance and immersive experiences on mobile and portable devices.',
+    ),
     ServiceItem(
-        iconPath: 'assets/list_of_services/icon11.png',
-        title: 'Client Server Application Development'),
+      iconPath: 'assets/list_of_services/icon11.png',
+      title: 'Client Server Application Development',
+      contentHeader: 'Client Server Application Development',
+      contentText:
+          'We build robust client-server applications that ensure reliable communication, secure data exchange, and efficient performance across distributed systems.',
+    ),
   ];
 
   static final List<BringItem> bringItems = [

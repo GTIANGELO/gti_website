@@ -103,13 +103,8 @@ class _ValuedClientsState extends State<ValuedClients>
                   duration: const Duration(milliseconds: 600),
                   opacity: _imageVisible[i] ? 1.0 : 0.0,
                   curve: Curves.easeIn,
-                  child: SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: Image.asset(
-                      Variables().imagePaths[i],
-                      fit: BoxFit.contain,
-                    ),
+                  child: _HoverZoomImage(
+                    imagePath: Variables().imagePaths[i],
                   ),
                 );
               }),
@@ -129,6 +124,46 @@ class _ValuedClientsState extends State<ValuedClients>
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HoverZoomImage extends StatefulWidget {
+  final String imagePath;
+
+  const _HoverZoomImage({required this.imagePath});
+
+  @override
+  State<_HoverZoomImage> createState() => _HoverZoomImageState();
+}
+
+class _HoverZoomImageState extends State<_HoverZoomImage> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(
+          begin: 1.0,
+          end: _isHovered ? 1.1 : 1.0,
+        ),
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOut,
+        builder: (context, scale, child) {
+          return Transform.scale(
+            scale: scale,
+            child: child,
+          );
+        },
+        child: Image.asset(
+          widget.imagePath,
+          fit: BoxFit.contain,
         ),
       ),
     );
