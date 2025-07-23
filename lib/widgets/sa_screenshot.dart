@@ -33,7 +33,7 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
         padding: const EdgeInsets.symmetric(vertical: 150),
         child: SizedBox(
           width: screenWidth,
-          height: screenHeight * screenSize.value(30.0, 0.75, 1.2, 1.2),
+          height: screenHeight * screenSize.value(30.0, 0.75, 1.2, 1),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -57,7 +57,7 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
               Positioned(
                 top: 0,
                 right: 0,
-                width: screenWidth * 0.61,
+                width: screenWidth * 0.70,
                 height: screenHeight * 0.3,
                 child: AnimatedOpacity(
                   opacity: _isVisible ? 1.0 : 0.0,
@@ -75,7 +75,7 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
                           Text(
                             "Built for Ease, Built for you",
                             style: TextStyle(
-                              fontSize: screenSize.value(10, 25, 40, 60),
+                              fontSize: screenSize.value(10, 25, 40, 70),
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -84,7 +84,7 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
                             textAlign: TextAlign.center,
                             "Built for Simplicity",
                             style: TextStyle(
-                              fontSize: screenSize.value(10, 25, 40, 60),
+                              fontSize: screenSize.value(10, 25, 40, 70),
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.primary,
                             ),

@@ -74,26 +74,41 @@ class SiteMapWidget extends StatelessWidget {
                         final label = linkItem['label'] as String;
                         final path = linkItem['path'] as String;
 
-                        return GestureDetector(
-                          onTap: () {
-                            if (kDebugMode) {
-                              print('Navigate to: $path');
-                            }
+                        bool isHovered = false;
+
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              onEnter: (_) => setState(() => isHovered = true),
+                              onExit: (_) => setState(() => isHovered = false),
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (kDebugMode) {
+                                    print('Navigate to: $path');
+                                  }
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: Text(
+                                    label,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: utilityFunctions
+                                          .getThemeColors(context)["secondary"],
+                                      decoration: isHovered
+                                          ? TextDecoration.underline
+                                          : TextDecoration.none,
+                                      fontSize: hasHeader ? 14 : 18,
+                                      fontWeight:
+                                          hasHeader ? null : FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: Text(
-                              label,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: utilityFunctions
-                                      .getThemeColors(context)["secondary"],
-                                  decoration: TextDecoration.underline,
-                                  fontSize: hasHeader ? 14 : 18,
-                                  fontWeight:
-                                      hasHeader ? null : FontWeight.bold),
-                            ),
-                          ),
                         );
                       }),
                     ],

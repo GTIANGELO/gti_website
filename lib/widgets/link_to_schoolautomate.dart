@@ -106,31 +106,27 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
               .withValues(alpha: 0.1),
           padding: const EdgeInsets.symmetric(vertical: 50),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50),
-            child: FadeTransition(
-              opacity: _opacity,
-              child: SlideTransition(
-                position: _slideOffset,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal:
-                        screenWidth * screenSize.value(0, 0.03, 0.06, 0.09),
-                    vertical: 50,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 45),
-                        child: Text(
-                          "Check our very successful, platform independent product SchoolAutomate (made on Java/JSP/AJAX) used by many small & big Universities, Colleges, Highschools and Elementary schools.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: screenSize.value(30.0, 18.0, 20, 30),
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * screenSize.value(0, 0.06, 0.06, 0.09),
+              vertical: 50,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Header Text Animation
+                SlideTransition(
+                  position: _headerSlide,
+                  child: FadeTransition(
+                    opacity: _headerOpacity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 45),
+                      child: Text(
+                        "Check our very successful, platform independent product SchoolAutomate (made on Java/JSP/AJAX) used by many small & big Universities, Colleges, Highschools and Elementary schools.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
@@ -153,34 +149,36 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
                               fit: BoxFit.cover,
                             ),
                           ),
-                          const SizedBox(width: 24),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children:
-                                  Variables().schoolautomateItems.map((item) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        item['image']!,
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Text(
-                                          item['text']!,
-                                          style: TextStyle(
-                                            fontSize: screenSize.value(
-                                                30.0, 15.0, 15, 18),
-                                            color: Colors.grey[700],
-                                          ),
-
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 24),
+                    Expanded(
+                      child: SlideTransition(
+                        position: _rightSlide,
+                        child: FadeTransition(
+                          opacity: _rightOpacity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:
+                                Variables().schoolautomateItems.map((item) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      item['image']!,
+                                      width: 30,
+                                      height: 30,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Text(
+                                        item['text']!,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey[700],
                                         ),
                                       ),
                                     ),
