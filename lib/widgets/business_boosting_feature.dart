@@ -6,7 +6,8 @@ import 'package:gti_website/widgets/navbar.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class BusinessBoostingFeature extends StatefulWidget {
-  const BusinessBoostingFeature({super.key});
+  final dynamic constraints;
+  const BusinessBoostingFeature({super.key, required this.constraints});
 
   @override
   State<BusinessBoostingFeature> createState() =>
@@ -35,6 +36,7 @@ class _BusinessBoostingFeatureState extends State<BusinessBoostingFeature> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final screenSize = getScreenSize(screenWidth);
     final item = Variables().items[_currentPage];
+     double headerTextSize = widget.constraints.maxWidth * 0.05;
 
     return VisibilityDetector(
       key: const Key('business_boosting_feature'),
@@ -75,7 +77,7 @@ class _BusinessBoostingFeatureState extends State<BusinessBoostingFeature> {
                         style: TextStyle(
                           color: utilityFunctions
                               .getThemeColors(context)["secondary"],
-                          fontSize: screenSize.value(25.0, 25.0, 30.0, 50.0),
+                          fontSize: headerTextSize.clamp(40, 70),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

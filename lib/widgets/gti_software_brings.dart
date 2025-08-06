@@ -14,12 +14,13 @@ class BringItem {
 class GtiSoftwareBrings extends StatefulWidget {
   final List<BringItem> services;
   final int crossAxisCount;
+  final dynamic constraints;
 
-  const GtiSoftwareBrings({
-    super.key,
-    required this.services,
-    this.crossAxisCount = 3,
-  });
+  const GtiSoftwareBrings(
+      {super.key,
+      required this.services,
+      this.crossAxisCount = 3,
+      required this.constraints});
 
   @override
   State<GtiSoftwareBrings> createState() => _GtiSoftwareBringsState();
@@ -107,6 +108,7 @@ class _GtiSoftwareBringsState extends State<GtiSoftwareBrings>
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final screenSize = getScreenSize(screenWidth);
+    double headerTextSize = widget.constraints.maxWidth * 0.05;
 
     return VisibilityDetector(
       key: const Key('GtiSoftwareBrings'),
@@ -128,21 +130,23 @@ class _GtiSoftwareBringsState extends State<GtiSoftwareBrings>
                 position: _headerSlide,
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 50.0),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: RichText(
-                      text: TextSpan(
+                  child: Center(
+                    // Center the entire text block
+                    child: Text.rich(
+                      TextSpan(
                         style: TextStyle(
-                          fontSize: screenSize.value(30.0, 25.0, 35.0, 50.0),
+                          fontSize: headerTextSize.clamp(40, 70),
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                         children: [
                           TextSpan(
-                              text: "What ",
-                              style: TextStyle(
-                                  color: utilityFunctions
-                                      .getThemeColors(context)["secondary"]!)),
+                            text: "What ",
+                            style: TextStyle(
+                              color: utilityFunctions
+                                  .getThemeColors(context)["secondary"]!,
+                            ),
+                          ),
                           TextSpan(
                             text: "GTI Software",
                             style: TextStyle(
@@ -151,12 +155,15 @@ class _GtiSoftwareBringsState extends State<GtiSoftwareBrings>
                             ),
                           ),
                           TextSpan(
-                              text: " brings to your business:",
-                              style: TextStyle(
-                                  color: utilityFunctions
-                                      .getThemeColors(context)["secondary"]!)),
+                            text: " brings to your business:",
+                            style: TextStyle(
+                              color: utilityFunctions
+                                  .getThemeColors(context)["secondary"]!,
+                            ),
+                          ),
                         ],
                       ),
+                      textAlign: TextAlign.center, // Center the text
                     ),
                   ),
                 ),

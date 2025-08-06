@@ -7,7 +7,8 @@ import 'package:gti_website/widgets/outlined_button.dart';
 
 class Footer extends StatelessWidget {
   final ScrollController scrollController;
-  const Footer({super.key, required this.scrollController});
+  final dynamic constraints;
+  const Footer({super.key, required this.scrollController, required this.constraints});
 
   Widget _buildIconTextItem(IconData icon, String text) {
     return Padding(
@@ -30,14 +31,14 @@ class Footer extends StatelessWidget {
     );
   }
 
-  Widget _buildLeftColumn(Color color) {
+  Widget _buildLeftColumn(Color color, double fontSize) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'US Office',
           style: TextStyle(
-              fontSize: 35, fontWeight: FontWeight.bold, color: color),
+              fontSize: fontSize.clamp(25, 35), fontWeight: FontWeight.bold, color: color),
         ),
         const SizedBox(height: 10),
         _buildIconTextItem(
@@ -49,7 +50,7 @@ class Footer extends StatelessWidget {
         Text(
           'GTI Development',
           style: TextStyle(
-              fontSize: 35, fontWeight: FontWeight.bold, color: color),
+              fontSize: fontSize.clamp(25, 35), fontWeight: FontWeight.bold, color: color),
         ),
         const SizedBox(height: 10),
         _buildIconTextItem(Icons.location_on,
@@ -61,11 +62,15 @@ class Footer extends StatelessWidget {
     );
   }
 
-  Widget _buildRightColumn(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        ClipRRect(
+  Widget _buildRightColumn(BuildContext context, ScreenSize screenSize, double fontSize) {
+  final isSmallOrMedium = screenSize.isSmall || screenSize.isMedium;
+
+  return Column(
+    mainAxisAlignment: isSmallOrMedium ? MainAxisAlignment.center : MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Center(
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Image.asset(
             'assets/gti_logo.png',
@@ -73,42 +78,70 @@ class Footer extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 180),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(onPressed: () {}, child: const Text('Privacy Policy')),
-              TextButton(
-                  onPressed: () => context.go("/sitemap"),
-                  child: const Text('Sitemap')),
-              TextButton(onPressed: () {}, child: const Text('Contact')),
-              TextButton(onPressed: () {}, child: const Text("FAQ's")),
-              const SizedBox(width: 20),
-              TextOutlinedButton(
-                label: 'Back to Top',
-                onPressed: () {
-                  scrollController.animateTo(
-                    0,
-                    duration: const Duration(milliseconds: 1000),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                color: utilityFunctions.getThemeColors(context)["secondary"]!,
-                fontSize: 12,
-                borderRadius: 0,
+      ),
+      Padding(
+        padding: EdgeInsets.only(top: screenSize.value(0, 20, 200, 180)),
+        child: isSmallOrMedium
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: () {}, child: const Text('Privacy Policy')),
+                  TextButton(onPressed: () => context.go("/sitemap"), child: const Text('Sitemap')),
+                  TextButton(onPressed: () {}, child: const Text('Contact')),
+                  TextButton(onPressed: () {}, child: const Text("FAQ's")),
+                  const SizedBox(height: 20),
+                  TextOutlinedButton(
+                    label: 'Back to Top',
+                    onPressed: () {
+                      scrollController.animateTo(
+                        0,
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    color: utilityFunctions.getThemeColors(context)["secondary"]!,
+                    fontSize: 12,
+                    borderRadius: 0,
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: () {}, child: const Text('Privacy Policy')),
+                  TextButton(onPressed: () => context.go("/sitemap"), child: const Text('Sitemap')),
+                  TextButton(onPressed: () {}, child: const Text('Contact')),
+                  TextButton(onPressed: () {}, child: const Text("FAQ's")),
+                  const SizedBox(width: 20),
+                  TextOutlinedButton(
+                    label: 'Back to Top',
+                    onPressed: () {
+                      scrollController.animateTo(
+                        0,
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    color: utilityFunctions.getThemeColors(context)["secondary"]!,
+                    fontSize: 12,
+                    borderRadius: 0,
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final screenSize = getScreenSize(screenWidth);
+    double fontSize = constraints.maxWidth * 0.02;
+
     Color color = utilityFunctions.getThemeColors(context)["primary"]!;
     return Padding(
       padding: const EdgeInsets.only(top: 80),
@@ -137,17 +170,17 @@ class Footer extends StatelessWidget {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _buildLeftColumn(color),
+                            _buildLeftColumn(color, fontSize),
                             const SizedBox(height: 30),
-                            _buildRightColumn(context),
+                            _buildRightColumn(context, screenSize, fontSize),
                           ],
                         )
                       : Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(child: _buildLeftColumn(color)),
+                            Expanded(child: _buildLeftColumn(color, fontSize)),
                             const SizedBox(width: 30),
-                            _buildRightColumn(context),
+                            _buildRightColumn(context, screenSize, fontSize),
                           ],
                         ),
                 ),

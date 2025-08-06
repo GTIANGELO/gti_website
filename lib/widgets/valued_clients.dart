@@ -9,10 +9,11 @@ import 'package:gti_website/widgets/outlined_button.dart';
 
 class ValuedClients extends StatefulWidget {
   final int crossAxisCount;
-
+  final dynamic constraints;
   const ValuedClients({
     super.key,
     this.crossAxisCount = 5,
+    required this.constraints
   });
 
   @override
@@ -57,6 +58,8 @@ class _ValuedClientsState extends State<ValuedClients>
     final int clampedCount = widget.crossAxisCount.clamp(1, 6);
     final double screenWidth = MediaQuery.of(context).size.width;
     final screenSize = getScreenSize(screenWidth);
+    double headerTextSize = widget.constraints.maxWidth * 0.05;
+
 
     return VisibilityDetector(
       key: const Key('valued_clients'),
@@ -84,7 +87,7 @@ class _ValuedClientsState extends State<ValuedClients>
                 child: Text(
                   "Our Valued Clients",
                   style: TextStyle(
-                    fontSize: 50,
+                    fontSize: headerTextSize.clamp(40, 70),
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.primary,
                   ),

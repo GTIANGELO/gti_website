@@ -7,20 +7,24 @@ import 'package:gti_website/widgets/navbar.dart';
 
 class SiteMapWidget extends StatelessWidget {
   final int columnCount;
+  final dynamic constraints;
 
   const SiteMapWidget({
     super.key,
     required this.columnCount,
+    required this.constraints,
   });
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final screenSize = getScreenSize(screenWidth);
+    double fontSize = constraints.maxWidth * 0.02;
+    double headerTextSize = constraints.maxWidth * 0.05;
 
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: screenWidth * 0.1, vertical: 100),
+          EdgeInsets.symmetric(horizontal: screenWidth * 0.1, vertical: screenSize.value(5, 70, 80, 100)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,20 +33,22 @@ class SiteMapWidget extends StatelessWidget {
             child: Text(
               "Sitemap",
               style: TextStyle(
-                fontSize: screenSize.value(30.0, 40.0, 55.0, 60),
+                fontSize: headerTextSize.clamp(40, 70),
                 color: utilityFunctions.getThemeColors(context)["primary"],
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          const SizedBox(height: 50),
-          GridView.count(
+          const SizedBox(height: 30),
+          GridView(
             shrinkWrap: true,
-            crossAxisCount: columnCount,
-            crossAxisSpacing: 25,
-            mainAxisSpacing: 25,
-            childAspectRatio: 4 / 3, // Smaller card
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(), // or use scrollable if needed
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 400,
+              mainAxisSpacing: 25,
+              crossAxisSpacing: 25,
+              // childAspectRatio: 3/2,
+            ),
             children: Variables.sitemapItems.map((item) {
               final links = item['links'] as List<dynamic>;
               final hasHeader = item.containsKey('header');
@@ -54,19 +60,17 @@ class SiteMapWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
-                    mainAxisAlignment: hasHeader
-                        ? MainAxisAlignment.start
-                        : MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (hasHeader)
                         Text(
                           header ?? '',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style:  TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 25,
+                            fontSize: fontSize.clamp(24, 30),
                           ),
                         ),
                       if (hasHeader) const SizedBox(height: 15),
@@ -90,7 +94,7 @@ class SiteMapWidget extends StatelessWidget {
                                 },
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 4),
+                                      const EdgeInsets.symmetric(vertical: 2),
                                   child: Text(
                                     label,
                                     textAlign: TextAlign.center,
@@ -100,9 +104,7 @@ class SiteMapWidget extends StatelessWidget {
                                       decoration: isHovered
                                           ? TextDecoration.underline
                                           : TextDecoration.none,
-                                      fontSize: hasHeader ? 14 : 18,
-                                      fontWeight:
-                                          hasHeader ? null : FontWeight.bold,
+                                      fontSize: hasHeader ? fontSize.clamp(16, 18) : 20,
                                     ),
                                   ),
                                 ),

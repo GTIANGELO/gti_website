@@ -108,7 +108,7 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: screenWidth * screenSize.value(0, 0.06, 0.06, 0.09),
-              vertical: 50,
+              vertical: 20,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +124,7 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
                         "Check our very successful, platform independent product SchoolAutomate (made on Java/JSP/AJAX) used by many small & big Universities, Colleges, Highschools and Elementary schools.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: screenSize.value(25, 15, 20, 30),
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,
                         ),
@@ -134,64 +134,117 @@ class _LinkToSchoolAutomateState extends State<LinkToSchoolAutomate>
                 ),
 
                 // Row Animation
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: SlideTransition(
-                        position: _leftSlide,
-                        child: FadeTransition(
-                          opacity: _leftOpacity,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              'assets/schoolautomate.png',
-                              fit: BoxFit.cover,
+                (screenSize.isMedium || screenSize.isSmall)
+    ? Column(
+        children: [
+          SlideTransition(
+            position: _leftSlide,
+            child: FadeTransition(
+              opacity: _leftOpacity,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  'assets/schoolautomate.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          SlideTransition(
+            position: _rightSlide,
+            child: FadeTransition(
+              opacity: _rightOpacity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: Variables().schoolautomateItems.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          item['image']!,
+                          width: 30,
+                          height: 30,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            item['text']!,
+                            style: TextStyle(
+                              fontSize: screenSize.value(30.0, 15, 15, 18),
+                              color: Colors.grey[700],
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: SlideTransition(
-                        position: _rightSlide,
-                        child: FadeTransition(
-                          opacity: _rightOpacity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children:
-                                Variables().schoolautomateItems.map((item) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset(
-                                      item['image']!,
-                                      width: 30,
-                                      height: 30,
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Text(
-                                        item['text']!,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey[700],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
+      )
+    : Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: SlideTransition(
+              position: _leftSlide,
+              child: FadeTransition(
+                opacity: _leftOpacity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    'assets/schoolautomate.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 24),
+          Expanded(
+            child: SlideTransition(
+              position: _rightSlide,
+              child: FadeTransition(
+                opacity: _rightOpacity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: Variables().schoolautomateItems.map((item) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            item['image']!,
+                            width: 30,
+                            height: 30,
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              item['text']!,
+                              style: TextStyle(
+                                fontSize: screenSize.value(30.0, 0.75, 15, 18),
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+
 
                 const SizedBox(height: 50),
                 Center(

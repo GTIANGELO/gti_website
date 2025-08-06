@@ -22,10 +22,12 @@ class ListOfServices extends StatefulWidget {
   final List<ServiceItem> services;
   final int crossAxisCount;
   final String headerText;
+  final dynamic constraints;
 
   const ListOfServices({
     super.key,
     required this.services,
+    required this.constraints,
     this.crossAxisCount = 3,
     this.headerText = '',
   });
@@ -49,6 +51,8 @@ class _ListOfServicesState extends State<ListOfServices> {
     final screenSize = getScreenSize(screenWidth);
     final theme = utilityFunctions.getThemeColors(context);
 
+    double headerTextSize = widget.constraints.maxWidth * 0.05;
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: screenWidth * screenSize.value(0, 0.06, 0.06, 0.1),
@@ -67,7 +71,7 @@ class _ListOfServicesState extends State<ListOfServices> {
                 child: Text(
                   widget.headerText,
                   style: TextStyle(
-                    fontSize: screenSize.value(25.0, 25.0, 30.0, 50.0),
+                    fontSize: headerTextSize.clamp(40, 70),
                     fontWeight: FontWeight.bold,
                     color: theme["secondary"],
                   ),
@@ -81,10 +85,10 @@ class _ListOfServicesState extends State<ListOfServices> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: widget.crossAxisCount,
-            crossAxisSpacing: screenSize.value(10.0, 15.0, 20.0, 35.0),
-            mainAxisSpacing: screenSize.value(15.0, 15.0, 20.0, 35.0),
+            crossAxisSpacing: screenSize.value(10.0, 15.0, 15.0, 35.0),
+            mainAxisSpacing: screenSize.value(15.0, 15.0, 15.0, 35.0),
             padding: const EdgeInsets.symmetric(horizontal: 5),
-            childAspectRatio: screenSize.value(50.0, 2, 2.5, 2.6),
+            childAspectRatio: screenSize.value(50.0, 2.3, 2.3, 2.6),
             children: List.generate(widget.services.length, (index) {
               final service = widget.services[index];
               final delay = Duration(milliseconds: (index ~/ 3) * 200);
@@ -97,6 +101,7 @@ class _ListOfServicesState extends State<ListOfServices> {
                   theme: theme,
                   isActive: _activeIndex == index,
                   onTap: () => _handleCardTap(index),
+                  constraints: widget.constraints
                 ),
               );
             }),
@@ -113,6 +118,7 @@ class _HoverOverlayCard extends StatefulWidget {
   final Map<String, Color> theme;
   final bool isActive;
   final VoidCallback onTap;
+  final dynamic constraints;
 
   const _HoverOverlayCard({
     required this.service,
@@ -120,6 +126,7 @@ class _HoverOverlayCard extends StatefulWidget {
     required this.theme,
     required this.isActive,
     required this.onTap,
+    required this.constraints,
   });
 
   @override
@@ -185,6 +192,9 @@ class _HoverOverlayCardState extends State<_HoverOverlayCard>
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = widget.constraints.maxWidth;
+    getScreenSize(screenWidth);
+    double fontSize =  screenWidth * 0.02;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => _onEnter(true),
@@ -223,7 +233,7 @@ class _HoverOverlayCardState extends State<_HoverOverlayCard>
                           softWrap: true,
                           overflow: TextOverflow.visible,
                           style: TextStyle(
-                            fontSize: widget.screenSize.value(12, 12, 13, 18),
+                            fontSize: fontSize.clamp(10, 20),
                             fontWeight: FontWeight.w500,
                             color: widget.theme["secondary"],
                           ),
@@ -243,7 +253,7 @@ class _HoverOverlayCardState extends State<_HoverOverlayCard>
                     child: Container(
                       color: widget.theme["secondary"]!.withAlpha(230),
                       padding: EdgeInsets.all(
-                          widget.screenSize.value(10, 15, 20, 15)),
+                          widget.screenSize.value(10, 7, 7, 15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -251,7 +261,7 @@ class _HoverOverlayCardState extends State<_HoverOverlayCard>
                             widget.service.contentHeader,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: widget.screenSize.value(14, 15, 16, 15),
+                              fontSize: fontSize.clamp(8, 15),
                               fontWeight: FontWeight.bold,
                               color: widget.theme["tertiary"],
                             ),
@@ -261,7 +271,7 @@ class _HoverOverlayCardState extends State<_HoverOverlayCard>
                             widget.service.contentText,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: widget.screenSize.value(10, 12, 13, 12),
+                              fontSize: fontSize.clamp(5, 13),
                               color: widget.theme["tertiary"],
                             ),
                           ),

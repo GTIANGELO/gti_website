@@ -373,9 +373,9 @@ class Variables {
       'header': 'Company',
       'links': [
         {'label': 'Overview', 'path': '/company/overview'},
-        {'label': 'Partner', 'path': '/company/partner'},
         {'label': 'Philosophy', 'path': '/company/philosophy'},
         {'label': 'Milestone', 'path': '/company/milestone'},
+        {'label': 'Partner', 'path': '/company/partner'},
         {'label': 'Careers & Opportunity', 'path': '/company/careers'},
       ],
     },
@@ -410,9 +410,9 @@ class Variables {
     {
       'header': 'Skills',
       'links': [
-        {'label': 'Overview', 'path': '/skills/overview'},
+        {'label': 'Consulting', 'path': '/skills/overview'},
+         {'label': 'Web Technology', 'path': '/skills/web-tech'},
         {'label': 'Windows', 'path': '/skills/windows'},
-        {'label': 'Web Technology', 'path': '/skills/web-tech'},
         {'label': 'Database', 'path': '/skills/database'},
         {'label': 'Hand-held', 'path': '/skills/handheld'},
         {'label': 'E-learning', 'path': '/skills/e-learning'},

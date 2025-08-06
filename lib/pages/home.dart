@@ -19,14 +19,14 @@ import 'package:gti_website/widgets/valued_clients.dart';
 import 'package:gti_website/widgets/we_gti_software.dart';
 import 'package:gti_website/widgets/what_we_provide.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Homepage extends StatefulWidget {
+  const Homepage({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Homepage> createState() => _HomepageState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class _HomepageState extends State<Homepage> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ChatBoxPanelState> chatBoxKey =
       GlobalKey<ChatBoxPanelState>();
@@ -35,7 +35,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
-  final NavBarController _navBarController = NavBarController(initiallyHidden: false);
+  final NavBarController _navBarController =
+      NavBarController(initiallyHidden: false);
 
   @override
   void initState() {
@@ -88,13 +89,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         builder: (context, constraints) {
           final screenSize = getScreenSize(constraints.maxWidth);
           if (screenSize.isExtraLarge) {
-            return _buildExtraLargeLayout();
+            return _buildExtraLargeLayout(constraints);
           } else if (screenSize.isLarge) {
-            return _buildLargeLayout();
+            return _buildLargeLayout(constraints);
           } else if (screenSize.isMedium) {
-            return _buildMediumLayout();
+            return _buildMediumLayout(constraints);
           } else if (screenSize.isSmall) {
-            return _buildSmallLayout();
+            return _buildSmallLayout(constraints);
           }
           return const Center(child: Text('Unsupported screen size'));
         },
@@ -124,7 +125,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildExtraLargeLayout() {
+  Widget _buildExtraLargeLayout(constraints) {
     return Stack(
       children: [
         SingleChildScrollView(
@@ -133,35 +134,43 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-              const MediaCarousel(
+              MediaCarousel(
                 videoPath: 'assets/carousel_media/vid1.mp4',
                 isVideoAsset: true,
-                imageUrls: [
+                imageUrls: const [
                   'assets/carousel_media/1.jpg',
                   'assets/carousel_media/2.jpg',
                   'assets/carousel_media/3.jpg',
                 ],
-                areImageAssets: [true, true, true],
+                areImageAssets: const [true, true, true],
+                constraints: constraints,
+
               ),
-              const WeAtGTI(),
+              WeAtGTI(constraints: constraints),
               ListOfServices(
                 services: Variables.serviceItems,
                 crossAxisCount: 3,
                 headerText: 'Our Services',
+                constraints: constraints,
               ),
               GtiSoftwareBrings(
                 services: Variables.bringItems,
                 crossAxisCount: 6,
+                constraints: constraints,
               ),
-              const BusinessBoostingFeature(),
-              const SchoolAutomateSection(),
+              BusinessBoostingFeature(
+                constraints: constraints,
+              ),
+              SchoolAutomateSection(constraints: constraints),
               const Highlights(),
               const WhateWeProvide(),
               const LinkToSchoolAutomate(),
-              const ValuedClients(crossAxisCount: 6),
-              const Ratings(),
+              ValuedClients(crossAxisCount: 6, constraints: constraints),
+              Ratings(constraints: constraints),
               const QuickContact(),
-              Footer(scrollController: _scrollController),
+              Footer(
+                  scrollController: _scrollController,
+                  constraints: constraints),
             ],
           ),
         ),
@@ -188,7 +197,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildLargeLayout() {
+  Widget _buildLargeLayout(constraints) {
     return Stack(
       children: [
         SingleChildScrollView(
@@ -197,35 +206,42 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-              const MediaCarousel(
+              MediaCarousel(
                 videoPath: 'assets/carousel_media/vid1.mp4',
                 isVideoAsset: true,
-                imageUrls: [
+                imageUrls: const [
                   'assets/carousel_media/1.jpg',
                   'assets/carousel_media/2.jpg',
                   'assets/carousel_media/3.jpg',
                 ],
-                areImageAssets: [true, true, true],
+                areImageAssets: const [true, true, true],
+                constraints: constraints,
+
               ),
-              const WeAtGTI(),
+              WeAtGTI(constraints: constraints),
               ListOfServices(
                 services: Variables.serviceItems,
                 crossAxisCount: 3,
                 headerText: 'Our Services',
+                constraints: constraints,
               ),
               GtiSoftwareBrings(
                 services: Variables.bringItems,
                 crossAxisCount: 3,
+                constraints: constraints,
               ),
-              const BusinessBoostingFeature(),
-              const SchoolAutomateSection(),
+              BusinessBoostingFeature(constraints: constraints),
+              SchoolAutomateSection(constraints: constraints),
               const Highlights(),
               const WhateWeProvide(),
               const LinkToSchoolAutomate(),
-              const ValuedClients(crossAxisCount: 5),
-              const Ratings(),
+              ValuedClients(crossAxisCount: 5, constraints: constraints),
+              Ratings(constraints: constraints),
               const QuickContact(),
-              Footer(scrollController: _scrollController)
+              Footer(
+                scrollController: _scrollController,
+                constraints: constraints,
+              )
             ],
           ),
         ),
@@ -247,7 +263,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildMediumLayout() {
+  Widget _buildMediumLayout(constraints) {
     return Stack(
       children: [
         SingleChildScrollView(
@@ -256,35 +272,39 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-              const MediaCarousel(
+              MediaCarousel(
                 videoPath: 'assets/carousel_media/vid1.mp4',
                 isVideoAsset: true,
-                imageUrls: [
+                imageUrls: const [
                   'assets/carousel_media/1.jpg',
                   'assets/carousel_media/2.jpg',
                   'assets/carousel_media/3.jpg',
                 ],
-                areImageAssets: [true, true, true],
+                areImageAssets: const [true, true, true],
+                constraints: constraints,
               ),
-              const WeAtGTI(),
+              WeAtGTI(constraints: constraints),
               ListOfServices(
                 services: Variables.serviceItems,
                 crossAxisCount: 2,
                 headerText: 'Our Services',
+                constraints: constraints,
               ),
               GtiSoftwareBrings(
                 services: Variables.bringItems,
                 crossAxisCount: 2,
+                constraints: constraints,
               ),
-              const BusinessBoostingFeature(),
-              const SchoolAutomateSection(),
+              BusinessBoostingFeature(constraints: constraints),
+              SchoolAutomateSection(constraints: constraints),
               const Highlights(),
               const WhateWeProvide(),
               const LinkToSchoolAutomate(),
-              const ValuedClients(crossAxisCount: 3),
-              const Ratings(),
+              ValuedClients(crossAxisCount: 3, constraints: constraints),
+              Ratings(constraints: constraints),
               const QuickContact(),
-              Footer(scrollController: _scrollController)
+              Footer(
+                  scrollController: _scrollController, constraints: constraints)
             ],
           ),
         ),
@@ -303,10 +323,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ),
       ],
-    );
+    ); 
   }
 
-  Widget _buildSmallLayout() {
+  Widget _buildSmallLayout(constraints) {
     return Stack(
       children: [
         // Background scrollable content
@@ -315,24 +335,28 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           child: Column(
             children: [
               // const SizedBox(height: 50),
-              const MediaCarousel(
+              MediaCarousel(
                 videoPath: 'assets/carousel_media/vid1.mp4',
                 isVideoAsset: true,
-                imageUrls: [
+                imageUrls: const [
                   'assets/carousel_media/1.jpg',
                   'assets/carousel_media/2.jpg',
                   'assets/carousel_media/3.jpg',
                 ],
-                areImageAssets: [true, true, true],
+                areImageAssets: const [true, true, true],
+                constraints: constraints,
+
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-                child: WeAtGTI(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+                child: WeAtGTI(constraints: constraints),
               ),
               ListOfServices(
                 services: Variables.serviceItems,
                 crossAxisCount: 2,
                 headerText: 'List of Services',
+                constraints: constraints,
               ),
               Padding(
                 padding:
@@ -340,6 +364,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 child: GtiSoftwareBrings(
                   services: Variables.bringItems,
                   crossAxisCount: 2,
+                  constraints: constraints,
                 ),
               ),
             ],

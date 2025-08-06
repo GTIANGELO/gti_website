@@ -7,7 +7,8 @@ import 'package:gti_website/functions/utility_functions.dart';
 import 'package:gti_website/widgets/navbar.dart';
 
 class Ratings extends StatefulWidget {
-  const Ratings({super.key});
+  final dynamic constraints;
+  const Ratings({super.key, required this.constraints});
 
   @override
   State<Ratings> createState() => _RatingsState();
@@ -79,6 +80,7 @@ class _RatingsState extends State<Ratings> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final screenSize = getScreenSize(screenWidth);
+    double headerTextSize = widget.constraints.maxWidth * 0.05;
 
     return VisibilityDetector(
       key: const Key('ratings-section'),
@@ -99,14 +101,14 @@ class _RatingsState extends State<Ratings> with SingleTickerProviderStateMixin {
                   padding: EdgeInsets.symmetric(
                     horizontal:
                         screenWidth * screenSize.value(0, 0.02, 0.03, 0.1),
-                    vertical: 50,
+                    vertical: screenSize.value(10, 40, 50, 50),
                   ),
                   child: Column(
                     children: [
                       Text(
                         "Hear it From Our Users",
                         style: TextStyle(
-                          fontSize: 40,
+                          fontSize: headerTextSize.clamp(40, 70),
                           fontWeight: FontWeight.w700,
                           color: utilityFunctions
                               .getThemeColors(context)["primary"],
@@ -166,12 +168,12 @@ class _RatingsState extends State<Ratings> with SingleTickerProviderStateMixin {
                                           child: Padding(
                                             padding: const EdgeInsets.all(20),
                                             child: SizedBox(
-                                              height: 150,
+                                              height: screenSize.value(120, 140, 150, 150),
                                               child: Center(
                                                 child: Text(
                                                   comment["text"] ?? "",
                                                   style: TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: screenSize.value(8, 16, 18, 18),
                                                     color: utilityFunctions
                                                             .getThemeColors(
                                                                 context)[
@@ -185,11 +187,11 @@ class _RatingsState extends State<Ratings> with SingleTickerProviderStateMixin {
                                         ),
                                       ),
                                       Positioned(
-                                        bottom: 20,
+                                        bottom: screenSize.value(8, 20, 20, 20),
                                         child: Column(
                                           children: [
                                             CircleAvatar(
-                                              radius: 50,
+                                              radius: screenSize.value(40, 40, 50, 50),
                                               backgroundImage: AssetImage(
                                                   comment["image"] ?? ""),
                                             ),

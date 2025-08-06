@@ -77,8 +77,8 @@ class _QuickContactState extends State<QuickContact>
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal:
-                      screenWidth * screenSize.value(0, 0.03, 0.06, 0.19),
-                  vertical: 80,
+                      screenWidth * screenSize.value(0, 0.03, 0.06, 0.08),
+                  vertical: screenSize.value(30.0, 0.4, 60, 80),
                 ),
                 child: Card(
                   color: utilityFunctions.getThemeColors(context)["tertiary"]!,
@@ -88,7 +88,7 @@ class _QuickContactState extends State<QuickContact>
                   ),
                   margin: const EdgeInsets.all(20),
                   child: Padding(
-                    padding: const EdgeInsets.all(24.0),
+                    padding: const EdgeInsets.all(30),
                     child: Row(
                       children: [
                         // Left: Image
@@ -113,7 +113,7 @@ class _QuickContactState extends State<QuickContact>
                               Text(
                                 'Quick Contact',
                                 style: TextStyle(
-                                  fontSize: 35,
+                                  fontSize: screenSize.value(30.0, 20, 30, 35),
                                   fontWeight: FontWeight.bold,
                                   color: utilityFunctions
                                       .getThemeColors(context)["secondary"],
@@ -146,7 +146,7 @@ class _QuickContactState extends State<QuickContact>
                                 },
                                 color: utilityFunctions
                                     .getThemeColors(context)["secondary"]!,
-                                fontSize: 12,
+                                fontSize: screenSize.value(30.0, 10, 12, 12),
                                 borderRadius: 0,
                               ),
                             ],

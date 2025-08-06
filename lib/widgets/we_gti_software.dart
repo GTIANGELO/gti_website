@@ -7,8 +7,10 @@ import 'package:gti_website/widgets/navbar.dart';
 import 'package:gti_website/widgets/outlined_button.dart';
 
 class WeAtGTI extends StatefulWidget {
+  final dynamic constraints;
+
   const WeAtGTI({
-    super.key,
+    super.key, required this.constraints
   });
 
   @override
@@ -56,13 +58,11 @@ class _WeAtGTIState extends State<WeAtGTI> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-
+    final double screenWidth = widget.constraints.maxWidth;
     final screenSize = getScreenSize(screenWidth);
-    final double paragraphSize = screenSize.value(15.0, 15.0, 16.0, 18.0);
-
-    final Color highlightColor =
-        utilityFunctions.getThemeColors(context)["primary"]!;
+    final Color highlightColor =  utilityFunctions.getThemeColors(context)["primary"]!;
+    double fontSize =  screenWidth * 0.02;
+    double headerTextSize = widget.constraints.maxWidth * 0.05;
 
     return VisibilityDetector(
       key: const Key('WeAtGTI_Visibility'),
@@ -82,7 +82,7 @@ class _WeAtGTIState extends State<WeAtGTI> with SingleTickerProviderStateMixin {
                 RichText(
                   text: TextSpan(
                     style: TextStyle(
-                      fontSize: screenSize.value(30.0, 40.0, 50.0, 60),
+                      fontSize: headerTextSize.clamp(20, 70),
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -104,7 +104,7 @@ class _WeAtGTIState extends State<WeAtGTI> with SingleTickerProviderStateMixin {
                   textAlign: TextAlign.justify,
                   "Recognize the value of the business, its efficiency, cost effectiveness, on-time and high quality product delivery. We have achieved this by strategic global model combining the best technology available with unparalleled expertise and innovation by highly skilled workforce of GTI Software. We bring you the best of savings and superior quality of offshore development. We offer unmatched cost savings and commitment to deliver premium quality product on time.",
                   style: TextStyle(
-                    fontSize: paragraphSize,
+                    fontSize: fontSize.clamp(10, 20),
                     color: Colors.grey[700],
                     height: 1.5,
                   ),
@@ -114,7 +114,7 @@ class _WeAtGTIState extends State<WeAtGTI> with SingleTickerProviderStateMixin {
                   textAlign: TextAlign.justify,
                   "Our Client-driven approach and commitment to deliver Software solutions that exceed our client's expectation makes us different from other outsourcing companies in the market. For every single project we not only offer supreme quality product but also we study, analyze, research and provide right solution at a very affordable cost. We provide solutions that match your budget and schedule. With GTI, your IT is in good hands @ 24/7. Let GTI professionals handle your IT needs so you can be free and focused on your core business expansion and extension.",
                   style: TextStyle(
-                    fontSize: paragraphSize,
+                    fontSize: fontSize.clamp(10, 20),
                     color: Colors.grey[700],
                     height: 1.5,
                   ),

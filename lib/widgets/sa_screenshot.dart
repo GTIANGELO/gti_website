@@ -4,7 +4,9 @@ import 'package:gti_website/functions/utility_functions.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class SchoolAutomateSection extends StatefulWidget {
-  const SchoolAutomateSection({super.key});
+  final dynamic constraints;
+
+  const SchoolAutomateSection({super.key, required this.constraints});
 
   @override
   State<SchoolAutomateSection> createState() => _SchoolAutomateSectionState();
@@ -16,8 +18,12 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = widget.constraints.maxWidth;
+    final double imageWidth = screenWidth * 0.9;
+    final double imageHeight = screenWidth * 0.5;
+    double fontSize = widget.constraints.maxWidth * 0.05;
+
+
     final screenSize = getScreenSize(screenWidth);
 
     return VisibilityDetector(
@@ -30,75 +36,76 @@ class _SchoolAutomateSectionState extends State<SchoolAutomateSection>
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 150),
-        child: SizedBox(
-          width: screenWidth,
-          height: screenHeight * screenSize.value(30.0, 0.75, 1.2, 1),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // Animated background image
-              AnimatedOpacity(
-                opacity: _isVisible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeOut,
-                child: AnimatedSlide(
-                  offset: _isVisible ? Offset.zero : const Offset(0, 0.2),
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeOut,
-                  child: Image.asset(
-                    'assets/sabg.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-
-              // Header text animation
-              Positioned(
-                top: 0,
-                right: 0,
-                width: screenWidth * 0.70,
-                height: screenHeight * 0.3,
-                child: AnimatedOpacity(
+          padding: const EdgeInsets.symmetric(vertical: 130),
+          child: SizedBox(
+            width: imageWidth,
+            height: imageHeight.clamp(300, 1500),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Animated background image
+                AnimatedOpacity(
                   opacity: _isVisible ? 1.0 : 0.0,
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeOut,
                   child: AnimatedSlide(
-                    offset: _isVisible ? Offset.zero : const Offset(0, -0.2),
-                    duration: const Duration(milliseconds: 1000),
+                    offset: _isVisible ? Offset.zero : const Offset(0, 0.2),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.easeOut,
-                    child: Container(
+                    child: Image.asset(
+                      'assets/sabg.png',
+                      fit: BoxFit.cover,
+                      width: imageWidth,
+                      height: imageHeight,
                       alignment: Alignment.center,
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Built for Ease, Built for you",
-                            style: TextStyle(
-                              fontSize: screenSize.value(10, 25, 40, 70),
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          Text(
-                            textAlign: TextAlign.center,
-                            "Built for Simplicity",
-                            style: TextStyle(
-                              fontSize: screenSize.value(10, 25, 40, 70),
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
+
+                // Header text animation
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  width: imageWidth * 0.70,
+                  child: AnimatedOpacity(
+                    opacity: _isVisible ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeOut,
+                    child: AnimatedSlide(
+                      offset: _isVisible ? Offset.zero : const Offset(0, -0.2),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.easeOut,
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(screenSize.value(0, 0, 0, 20)),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Built for Ease, Built for you",
+                              style: TextStyle(
+                                fontSize: fontSize.clamp(15, 70),
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              "Built for Simplicity",
+                              style: TextStyle(
+                                fontSize: fontSize.clamp(15, 70),
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )),
     );
   }
 }

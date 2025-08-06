@@ -10,6 +10,7 @@ class MediaCarousel extends StatefulWidget {
   final bool isVideoAsset;
   final List<String> imageUrls;
   final List<bool> areImageAssets;
+  final dynamic constraints;
 
   const MediaCarousel({
     super.key,
@@ -17,6 +18,7 @@ class MediaCarousel extends StatefulWidget {
     required this.imageUrls,
     this.isVideoAsset = false,
     this.areImageAssets = const [],
+    required this.constraints
   });
 
   @override
@@ -24,9 +26,9 @@ class MediaCarousel extends StatefulWidget {
 }
 
 class _MediaCarouselState extends State<MediaCarousel> {
+
   late VideoPlayerController _videoController;
-  final CarouselSliderController _carouselController =
-      CarouselSliderController();
+  final CarouselSliderController _carouselController = CarouselSliderController();
   int _currentIndex = 0;
 
   @override
@@ -45,9 +47,14 @@ class _MediaCarouselState extends State<MediaCarousel> {
       ..play();
   }
 
-  Widget _buildOverlay(double width, double height, ScreenSize screenSize) {
-    final double headerFontSize = screenSize.value(20, 30, 40, 50);
-    final double bodyFontSize = screenSize.value(10, 16, 18, 25);
+  Widget _buildOverlay(double width, double height) {
+    double screenWidth = widget.constraints.maxWidth;
+    final screenSize = getScreenSize(screenWidth);
+
+    double headerTextSize = screenWidth * 0.05;
+    double fontSize = screenWidth * 0.02;
+    double carouselHeight = widget.constraints.maxWidth * screenSize.value(0.45, 0.30, 0.30, 0.20);
+
 
     return Positioned(
       bottom: 0,
@@ -55,8 +62,8 @@ class _MediaCarouselState extends State<MediaCarousel> {
       right: 0,
       child: Container(
         width: width,
-        height: height * screenSize.value(0.5, 0.45, 0.4, 0.4),
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+        height: carouselHeight,
+        padding:  EdgeInsets.symmetric(horizontal: screenSize.value(15, 35, 40, 40), vertical: 30),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -77,7 +84,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
               'Software Outsourcing Company',
               style: TextStyle(
                 color: utilityFunctions.getThemeColors(context)["primary"]!,
-                fontSize: headerFontSize,
+                fontSize: headerTextSize.clamp(20, 70),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -88,7 +95,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
                 'A leader in Software development focused on providing the best and most cost-effective solutions to small, medium and large businesses. Solutions that help businesses, organizations and individuals to save overhead cost, increase quality and efficiency.',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: bodyFontSize,
+                  fontSize: fontSize.clamp(10, 20),
                   height: 1.4,
                 ),
               ),
@@ -101,12 +108,10 @@ class _MediaCarouselState extends State<MediaCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    // final double screenHeight = MediaQuery.of(context).size.height;
-    final double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = widget.constraints.maxWidth;
     final screenSize = getScreenSize(screenWidth);
 
-    final double dynamicHeight =
-        screenWidth * screenSize.value(0.7, 0.8, 0.7, 0.5);
+    double carouselHeight = widget.constraints.maxWidth * screenSize.value(1.30, 0.80, 0.80, 0.50);
 
     final mediaItems = [
       if (_videoController.value.isInitialized)
@@ -114,7 +119,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
           children: [
             SizedBox(
               width: screenWidth,
-              height: dynamicHeight,
+              height: carouselHeight,
               child: FittedBox(
                 fit: BoxFit.cover,
                 clipBehavior: Clip.hardEdge,
@@ -132,20 +137,20 @@ class _MediaCarouselState extends State<MediaCarousel> {
           children: [
             SizedBox(
               width: screenWidth,
-              height: dynamicHeight,
+              height: carouselHeight,
               child:
                   widget.areImageAssets.length > i && widget.areImageAssets[i]
                       ? Image.asset(
                           widget.imageUrls[i],
                           fit: BoxFit.cover,
                           width: screenWidth,
-                          height: dynamicHeight,
+                          height: carouselHeight,
                         )
                       : Image.network(
                           widget.imageUrls[i],
                           fit: BoxFit.cover,
                           width: screenWidth,
-                          height: dynamicHeight,
+                          height: carouselHeight,
                           errorBuilder: (context, error, stackTrace) =>
                               const Icon(Icons.broken_image, size: 100),
                         ),
@@ -160,7 +165,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
           items: mediaItems,
           carouselController: _carouselController, // ✅ Correct usage
           options: CarouselOptions(
-            height: dynamicHeight,
+            height: carouselHeight,
             viewportFraction: 1.0,
             enlargeCenterPage: false,
             autoPlay: true,
@@ -178,7 +183,7 @@ class _MediaCarouselState extends State<MediaCarousel> {
             },
           ),
         ),
-        _buildOverlay(screenWidth, dynamicHeight, screenSize),
+        _buildOverlay(screenWidth, carouselHeight),
       ],
     );
   }
